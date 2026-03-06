@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "linkedin-post-generator-backend",
   "version": "1.0.0",
   "main": "server.js",
@@ -7,17 +7,22 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.6.3",
-    "openai": "^4.20.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express-validator": "^7.0.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
     "express-rate-limit": "^7.1.3",
+    "express-validator": "^7.0.1",
+    "groq-sdk": "^0.37.0",
     "helmet": "^7.1.0",
-    "morgan": "^1.10.0"
+    "mongoose": "^7.6.3",
+    "morgan": "^1.10.0",
+    "openai": "^4.104.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
-  }
+  },
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

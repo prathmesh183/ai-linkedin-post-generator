@@ -83,7 +83,7 @@ export default function Home() {
       <div className="hero fade-up">
         <div className="hero-badge">
           <Sparkles size={12} />
-          Powered by GPT-3.5
+          Powered by GrokAI
         </div>
         <h1 className="hero-title">
           Write LinkedIn posts<br />
