@@ -1,5 +1,6 @@
-﻿const OpenAI = require("openai");
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+﻿require("dotenv").config();
+const Groq = require("groq-sdk");
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const TONE_DESCRIPTIONS = {
   professional: "formal, authoritative, and polished",
@@ -32,8 +33,8 @@ Requirements:
 5. Add 5-8 relevant hashtags on a new line
 6. Write the post directly, no intro text`;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
       messages: [
         { role: "system", content: "You are a professional LinkedIn content strategist." },
         { role: "user", content: prompt },
@@ -50,7 +51,7 @@ Requirements:
       data: { generatedPost, hashtags, characterCount: generatedPost.length },
     });
   } catch (error) {
-    if (error?.status === 429) error.message = "OpenAI rate limit reached. Try again shortly.";
+    if (error?.status === 429) error.message = "Groq rate limit reached. Try again shortly.";
     next(error);
   }
 };

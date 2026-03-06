@@ -15,9 +15,10 @@ const { errorHandler, notFound } = require("./middleware/errorHandler");
 connectDB();
 
 const app = express();
+app.set("trust proxy", 1); // ← fixes rate-limit warning
 
 // ─── Security Middleware ──────────────────────────────────────────────────────
-app.use(helmet()); // Sets secure HTTP headers
+app.use(helmet());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || "http://localhost:3000",
@@ -28,7 +29,7 @@ app.use(
 
 // ─── Rate Limiting ────────────────────────────────────────────────────────────
 const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 min
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
   max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100,
   standardHeaders: true,
   legacyHeaders: false,
@@ -38,9 +39,8 @@ const limiter = rateLimit({
   },
 });
 
-// Stricter rate limit specifically for AI generation (costs money)
 const generateLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
+  windowMs: 60 * 1000,
   max: 10,
   message: {
     success: false,
@@ -86,7 +86,6 @@ app.listen(PORT, () => {
   console.log(`💾 Posts API:    http://localhost:${PORT}/api/posts\n`);
 });
 
-// Graceful shutdown
 process.on("SIGTERM", () => {
   console.log("SIGTERM received. Shutting down gracefully...");
   process.exit(0);
